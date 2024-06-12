@@ -2,29 +2,29 @@ import React, { useEffect, useRef, useState } from 'react';
 import todo_icon from '../assets/todo_icon.png';
 import TodoItems from './TodoItems';
 
-const Todo = () => {
+  const Todo = () => {
 
   const [todoList, setTodoList] = useState(localStorage.getItem("todos")? JSON.parse(localStorage.getItem("todos")) :[]);
   const inputRef = useRef();
 
-  const add =() => {
+      const add =() => {
       const inputText = inputRef.current.value.trim();
       const newTodo ={
-        id: Date.now(),
-        text: inputText,
-        isComplete: false,
+      id: Date.now(),
+      text: inputText,
+      isComplete: false,
       }
       setTodoList((prev)=>[...prev, newTodo]);
       inputRef.current.value = "";  //input fileld empty 
   }
 
-    const deleteTodo = (id) => {
-      setTodoList((prevTodos)=>{
+     const deleteTodo = (id) => {
+       setTodoList((prevTodos)=>{
        return prevTodos.filter((todo) => todo.id !== id)
       })
     }
 
-    const toggle = (id) =>{
+      const toggle = (id) =>{
       setTodoList((prvTodos)=>{
         return prvTodos.map((todo)=>{
           if(todo.id === id){
@@ -34,7 +34,6 @@ const Todo = () => {
         })
       })
     }
-
     useEffect(()=>{
      localStorage.setItem("todos", JSON.stringify(todoList)); // convert array into string
     },[todoList])
@@ -51,16 +50,12 @@ const Todo = () => {
             <button onClick={add} className='border-none rounded-full bg-orange-600 w-32 h-14 text-white text-lg font-medium cursor-pointer'>Add +</button>
          </div>
          {/* ######### Todo List ############ */}
-         
           <div>
               {todoList.map((item, index)=>{
                  return <TodoItems key={index} text={item.text} id={item.id} isComplete={item.isComplete} deleteTodo={deleteTodo} toggle={toggle} />
               })}
-              
           </div>
-
     </div>
   )
 }
-
 export default Todo;
