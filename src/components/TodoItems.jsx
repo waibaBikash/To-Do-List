@@ -14,5 +14,4 @@ const TodoItems = ({text, id, isComplete, deleteTodo, toggle}) => {
     </div>
   )
 }
-
 export default TodoItems;
