@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import todo_icon from '../assets/todo_icon.png';
 import TodoItems from './TodoItems';
 
@@ -23,6 +23,21 @@ const Todo = () => {
        return prevTodos.filter((todo) => todo.id !== id)
       })
     }
+
+    const toggle = (id) =>{
+      setTodoList((prvTodos)=>{
+        return prvTodos.map((todo)=>{
+          if(todo.id === id){
+            return {...todo, isComplete: !todo.isComplete}  // if it is true it make it false and vise versa
+          }
+          return todo; // returns other item without changing status
+        })
+      })
+    }
+
+    useEffect(()=>{
+     console.log();
+    },[todoList])
   return (
     <div className='bg-white place-self-center w-11/12 max-w-md flex flex-col p-7 min-h-[550px] rounded-xl'>
          {/* ####### title ########### */}
@@ -39,7 +54,7 @@ const Todo = () => {
          
           <div>
               {todoList.map((item, index)=>{
-                 return <TodoItems key={index} text={item.text} id={item.id} isComplete={item.isComplete} deleteTodo={deleteTodo} />
+                 return <TodoItems key={index} text={item.text} id={item.id} isComplete={item.isComplete} deleteTodo={deleteTodo} toggle={toggle} />
               })}
               
           </div>
